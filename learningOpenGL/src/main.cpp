@@ -182,6 +182,7 @@ int main()
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
+        //transformation1
         glm::mat4 transform = glm::mat4(1.0f);
         transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
         transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
@@ -191,6 +192,14 @@ int main()
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+        //transformation2
+        transform = glm::mat4(1.0f); // reset it to identity matrix
+        transform = glm::translate(transform, glm::vec3(-0.5f, 0.5f, 0.0f));
+        float scaleAmount = static_cast<float>(sin(glfwGetTime()));
+        transform = glm::scale(transform, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
+
+        ourShader.setMat4("transform", transform);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
